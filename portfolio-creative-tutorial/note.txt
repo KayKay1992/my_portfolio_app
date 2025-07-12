@@ -1,0 +1,23 @@
+SETTING UP PRISMIC AND NEXT JS APP 
+Go to prismic website and create an account, verify your mail and navigate to the dashboard.
+select next jx, give your project a name and select the free version to create a prismic project.
+set up your project in the terminal, create an empty folder with the name of you project, open it in your vscode or your IDE, then open a terminal and copy the installation command from prismic app and install the project locally. then navigate to your project and run npm run dev to test it.
+Then we link our project to prismic, by installing the prismic dev tool slice machine by running the command generated in the prismic for this project, we navigate to the project and run this command npx @slicemachine/init@latest --repository portfolio-creative-tutorial
+After installing the slice machine start your slice machine.
+open another terminal and start your nextjs project.
+Go to slice machine and click on the url, when it opens now you create your page, we start from scratch first we create a homepage page, then we add slices, in the homepage we will have a hero slice, so add the hero slice, in the slice zone click on hero slice to add the fields, so we added three text filds for First name, last name and tag line.
+By the side bar you will see review changes, click on it and click on push button to push your changes.
+In the Name of your project you will see an arrow click on it and your project will be initialised to production.
+Click on heropage, then click on add a slice, click on hero slice hover around the box click on + sign and fill the inputs with the required details (first name, last name, tag ) then save it, then publish it.
+Then we come back to our project in vscode and do some clean up.
+Now go to slice machine running at http://localhost:9999 and click on homepage, click on page snippet and copy the snippet code app router preferably, then paste it on page.tsx.
+you should then run your next js app you will find some ting like Placeholder component for hero (variation: default) slices.
+You can edit this slice directly in your code editor. then you will know it is a huge success.
+In slices folder you will see a Hero folder already created automatically from the prisma this has 3 files, but in index.tsx is where our code is and get your slice first name with this {slice.primary.first_name}. go to your app you will see the first name. this is where we will create our hero section. 
+We cleaned up the global.css file and replace with tailwind v4 configuration,
+ Explanation of Each Import,
+tailwindcss/preflight – Replaces @tailwind base; it handles browser resets,
+tailwindcss/components – Loads any component classes (custom or built-in),
+tailwindcss/utilities – Loads the utility classes (flex, p-4, text-red-500, etc.).
+i set up the tailwind v4, created tailwind.config file, cleared up my global.css,
+Changed the font in layout.tsx to urbanist
