@@ -1,3 +1,122 @@
-SPLITTING OUR SPAN NAME TO INDIVIDUAL ALPHABET SPAN 
+IMPLEMENTING GSAP FOR OUR ANIMATION
 
-We wrote a function that will split our name span to individual alphabet span that will enable us to animate each alphab
+1. Navigate to your project directory in a new terminal, run this command to insatll gsap package to your project npm i gsap
+
+# GSAP Explanation, Setup, and Application in the Code
+
+## What is GSAP?
+
+GSAP (GreenSock Animation Platform) is a powerful JavaScript animation library that enables you to create high-performance, professional-grade animations for the web. It's widely used because:
+
+1. **Performance**: Optimized for smooth animations even on low-powered devices
+2. **Precision**: Frame-perfect control over animations
+3. **Features**: Timeline sequencing, easing functions, transforms, and more
+4. **Cross-browser compatibility**: Works consistently across all major browsers
+
+## GSAP Setup in this Project
+
+In this code, GSAP is being used in a Next.js/React environment:
+
+1. **Installation**: GSAP was likely installed via npm/yarn with:
+   ```bash
+   npm install gsap
+   ```
+
+2. **Import**: The library is imported at the top:
+   ```javascript
+   import gsap from "gsap";
+   ```
+
+## GSAP Application in this Code
+
+### 1. Animation Setup
+
+The animations are set up in a `useEffect` hook to run when the component mounts:
+
+```javascript
+useEffect(() => {
+  let ctx = gsap.context(() => {
+    const tl = gsap.timeline();
+    
+    // Name animation
+    tl.fromTo('.name-animation', 
+      {x: -100, opacity: 0, rotate: -10}, 
+      {
+        x: 0,
+        opacity: 1,
+        rotate: 0,
+        ease: "elastic.out(1,0.2)",
+        duration: 2,
+        delay: 0.5,
+        transformOrigin: "left top",
+        stagger: {
+          each: 0.2,
+          from: "random"
+        }
+      });
+    
+    // Job title animation
+    tl.fromTo('.job-title', 
+      {y: 20, opacity: 0, scale:1.2}, 
+      {
+        opacity: 1,
+        y: 0,
+        duration: 2,
+        scale: 1,
+        ease: "elastic.out(1,0.2)",
+      });
+  }, component);
+  
+  return () => ctx.revert();
+}, []);
+```
+
+Key aspects:
+- `gsap.context()` helps manage animations and clean them up properly
+- A timeline (`tl`) is created to sequence animations
+- `fromTo()` animations define starting and ending states
+- The cleanup function (`return () => ctx.revert()`) prevents memory leaks
+
+### 2. Letter-by-Letter Animation
+
+The `renderLetters` function splits the name into individual letters wrapped in spans with the `name-animation` class:
+
+```javascript
+const renderLetters = (name:KeyTextField, key:string) => {
+  if(!name) return;
+  return name.split("").map((letter, index) => (
+    <span key={index} className={`name-animation name-animation-${key} inline-block opacity-0`}>
+      {letter}
+    </span>
+  ))
+}
+```
+
+This allows GSAP to:
+- Animate each letter separately
+- Use the `stagger` property to create a randomized sequential animation
+- Control opacity, position, and rotation for each character
+
+### 3. Animation Effects Being Used
+
+1. **Name Animation**:
+   - Starts 100px to the left (`x: -100`)
+   - Starts invisible (`opacity: 0`)
+   - Starts slightly rotated (`rotate: -10`)
+   - Animates to visible, centered, and upright
+   - Uses an elastic easing for a bouncy effect
+   - Staggers each letter's animation randomly
+
+2. **Job Title Animation**:
+   - Starts slightly below (`y: 20`) and larger (`scale:1.2`)
+   - Animates to normal position and size
+   - Also uses elastic easing
+
+## Why This Approach is Effective
+
+1. **Performance**: GSAP animations are highly optimized
+2. **Visual Appeal**: The elastic easing and staggered animations create an engaging entrance
+3. **Maintainability**: The animation logic is cleanly contained in the useEffect
+4. **Responsive**: Works well across different screen sizes
+
+This implementation creates a dynamic, attention-grabbing hero section that animates in when the page loads, providing a polished user experience.
