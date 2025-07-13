@@ -2,45 +2,41 @@ IMPLEMENTING GSAP FOR OUR ANIMATION
 
 another example of gsap animation in our hero section
 
-2. Morphing Wave Effect
+4. 3D Flip Animation
 
- useEffect(() => {
+useEffect(() => {
   let ctx = gsap.context(() => {
     const tl = gsap.timeline();
     
-    // Name animation - wave effect
+    // Name animation - 3D flip effect
     tl.fromTo('.name-animation', 
       {
-        y: (i) => (i % 2 === 0 ? 40 : -40),
+        rotationX: 90,
         opacity: 0,
-        scaleY: 0.5
+        transformOrigin: "50% 50% -20px"
       }, 
       {
-        y: 0,
+        rotationX: 0,
         opacity: 1,
-        scaleY: 1,
         ease: "back.out(2)",
-        duration: 1.2,
-        stagger: {
-          each: 0.05,
-          from: "end"
-        }
+        duration: 1.5,
+        stagger: 0.1
       });
     
-    // Job title - ripple effect
+    // Job title - perspective zoom
     tl.fromTo('.job-title', 
       {
         opacity: 0,
-        scale: 0.8,
-        textShadow: "0 0 10px rgba(255,255,255,0)"
+        rotationY: 180,
+        scale: 0.5
       }, 
       {
         opacity: 1,
+        rotationY: 0,
         scale: 1,
-        textShadow: "0 0 10px rgba(255,255,255,0.3)",
-        duration: 1.5,
-        ease: "elastic.out(1, 0.5)"
-      }, "-=0.5");
+        ease: "power3.out",
+        duration: 1.5
+      }, "-=1");
   }, component);
   
   return () => ctx.revert();
