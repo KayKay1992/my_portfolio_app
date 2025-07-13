@@ -2,46 +2,45 @@ IMPLEMENTING GSAP FOR OUR ANIMATION
 
 another example of gsap animation in our hero section
 
- Floating Letters with Color Transition
+2. Morphing Wave Effect
 
  useEffect(() => {
   let ctx = gsap.context(() => {
     const tl = gsap.timeline();
     
-    // Name animation - floating letters with color transition
+    // Name animation - wave effect
     tl.fromTo('.name-animation', 
       {
-        y: 40,
+        y: (i) => (i % 2 === 0 ? 40 : -40),
         opacity: 0,
-        color: "#4f46e5", // Start with indigo
-        filter: "blur(5px)"
+        scaleY: 0.5
       }, 
       {
         y: 0,
         opacity: 1,
-        color: "#e2e8f0", // End with slate-300
-        filter: "blur(0px)",
-        ease: "power3.out",
-        duration: 1.5,
-        delay: 0.3,
+        scaleY: 1,
+        ease: "back.out(2)",
+        duration: 1.2,
         stagger: {
-          each: 0.08,
-          from: "center"
+          each: 0.05,
+          from: "end"
         }
       });
     
-    // Job title - shimmering gradient effect
+    // Job title - ripple effect
     tl.fromTo('.job-title', 
       {
         opacity: 0,
-        backgroundPosition: "0% 0%"
+        scale: 0.8,
+        textShadow: "0 0 10px rgba(255,255,255,0)"
       }, 
       {
         opacity: 1,
-        backgroundPosition: "100% 100%",
-        duration: 2,
-        ease: "sine.inOut",
-      }, "-=1"); // Overlap with previous animation
+        scale: 1,
+        textShadow: "0 0 10px rgba(255,255,255,0.3)",
+        duration: 1.5,
+        ease: "elastic.out(1, 0.5)"
+      }, "-=0.5");
   }, component);
   
   return () => ctx.revert();
