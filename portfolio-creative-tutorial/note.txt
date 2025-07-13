@@ -2,40 +2,41 @@ IMPLEMENTING GSAP FOR OUR ANIMATION
 
 another example of gsap animation in our hero section
 
-4. 3D Flip Animation
+5. Particle Explosion Effect
 
 useEffect(() => {
   let ctx = gsap.context(() => {
     const tl = gsap.timeline();
     
-    // Name animation - 3D flip effect
+    // Name animation - particle explosion
     tl.fromTo('.name-animation', 
       {
-        rotationX: 90,
+        x: () => gsap.utils.random(-200, 200),
+        y: () => gsap.utils.random(-200, 200),
         opacity: 0,
-        transformOrigin: "50% 50% -20px"
+        scale: 0
       }, 
       {
-        rotationX: 0,
+        x: 0,
+        y: 0,
         opacity: 1,
-        ease: "back.out(2)",
-        duration: 1.5,
-        stagger: 0.1
+        scale: 1,
+        ease: "power4.out",
+        duration: 1.8,
+        stagger: 0.03
       });
     
-    // Job title - perspective zoom
+    // Job title - radial wipe
     tl.fromTo('.job-title', 
       {
-        opacity: 0,
-        rotationY: 180,
-        scale: 0.5
+        clipPath: "circle(0% at 50% 50%)",
+        opacity: 0
       }, 
       {
+        clipPath: "circle(100% at 50% 50%)",
         opacity: 1,
-        rotationY: 0,
-        scale: 1,
-        ease: "power3.out",
-        duration: 1.5
+        duration: 1.5,
+        ease: "power2.inOut"
       }, "-=1");
   }, component);
   
