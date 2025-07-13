@@ -1,8 +1,3 @@
-SETTING UP OUR LIVE PREVIEW IN PRISMIC,
+SPLITTING OUR SPAN NAME TO INDIVIDUAL ALPHABET SPAN 
 
-please note to make sure your slice machine is running if not running start it with this command npm run slicemachine.
-To set up live preview in prismic go to homepage page, click on live preview, put your project url e.g http://localhost:3000/slice-simulator always make sure you include the lice-simulator extension to your project url, then click save.
-
-
-NOW LETS WORK ON OUR HERO PAGE.
-In Index.tsx file we styled our hero section (names and tag line.)
+We wrote a function that will split our name span to individual alphabet span that will enable us to animate each alphab
