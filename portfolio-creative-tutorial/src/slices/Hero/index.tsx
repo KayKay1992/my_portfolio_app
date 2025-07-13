@@ -18,39 +18,48 @@ const Hero: FC<HeroProps> = ({ slice }) => {
 
   const component = useRef(null)
 
-  useEffect(()=> {
-    let ctx =gsap.context(()=> {
-   const tl = gsap.timeline()
-
-   tl.fromTo('.name-animation', {x: -100, opacity: 0, rotate: -10}, {
-    x: 0,
-    opacity: 1,
-    rotate: 0,
-    ease: "elastic.out(1,0.2)",
-    duration: 2,
-    delay: 0.5,
-    transformOrigin: "left top",
-    stagger: {
-      each: 0.2,
-      from: "random"
-    }
-   });
-
-   tl.fromTo('.job-title', {
-    y: 20,
-    opacity: 0,
-    scale:1.2
-   }, {
-    opacity: 1,
-    y: 0,
-    duration: 2,
-    scale: 1,
-    ease: "elastic.out(1,0.2)",
-   })
-
-    }, component)
-    return () => ctx.revert()
-  }, [])
+useEffect(() => {
+  let ctx = gsap.context(() => {
+    const tl = gsap.timeline();
+    
+    // Name animation - floating letters with color transition
+    tl.fromTo('.name-animation', 
+      {
+        y: 40,
+        opacity: 0,
+        color: "#4f46e5", // Start with indigo
+        filter: "blur(5px)"
+      }, 
+      {
+        y: 0,
+        opacity: 1,
+        color: "#e2e8f0", // End with slate-300
+        filter: "blur(0px)",
+        ease: "power3.out",
+        duration: 1.5,
+        delay: 0.3,
+        stagger: {
+          each: 0.08,
+          from: "center"
+        }
+      });
+    
+    // Job title - shimmering gradient effect
+    tl.fromTo('.job-title', 
+      {
+        opacity: 0,
+        backgroundPosition: "0% 0%"
+      }, 
+      {
+        opacity: 1,
+        backgroundPosition: "100% 100%",
+        duration: 2,
+        ease: "sine.inOut",
+      }, "-=1"); // Overlap with previous animation
+  }, component);
+  
+  return () => ctx.revert();
+}, []);
 
     //function that will split our name span to individual alphabet span that will enable us to animate each alphabet
 
