@@ -22,22 +22,21 @@ useEffect(() => {
   let ctx = gsap.context(() => {
     const tl = gsap.timeline();
     
-    // Name animation - particle explosion
+       // Name animation
     tl.fromTo('.name-animation', 
-      {
-        x: () => gsap.utils.random(-200, 200),
-        y: () => gsap.utils.random(-200, 200),
-        opacity: 0,
-        scale: 0
-      }, 
+      {x: -100, opacity: 0, rotate: -10}, 
       {
         x: 0,
-        y: 0,
         opacity: 1,
-        scale: 1,
-        ease: "power4.out",
-        duration: 1.8,
-        stagger: 0.03
+        rotate: 0,
+        ease: "elastic.out(1,0.2)",
+        duration: 2,
+        delay: 0.5,
+        transformOrigin: "left top",
+        stagger: {
+          each: 0.2,
+          from: "random"
+        }
       });
     
     // Job title - radial wipe
