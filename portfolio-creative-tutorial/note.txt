@@ -1,52 +1,5 @@
-SETTING UP THREE JS SCENE AND CREATING THE SHAPE COMPONENT.
+Adding Sound Effect.
 
-visit react-three-fibre website.
-2. Go to the introduction document 
-3. Copy the installation command and install it in your project
-4. back to threejs site scroll down you will find ecosysytem then another threejs component u need to insatll is the threejs drei, use this command npm install @react-three/drei
-5. Because we creating the shapes and symbols in hero section, so we created a file in the hero section folder shapes.tsx.
+1. Go to kenney website and get any audio of your choice, download  and extract it then move your choice sound to public folder in your project, here is the link to kenney audio https://kenney.nl/assets/category:Audio?sort=update
 
-Three.js in Your Project
-Three.js is a powerful JavaScript library for creating 3D graphics in the browser using WebGL. In your project, you're using it with React via @react-three/fiber (R3F), which provides React components for Three.js objects, making it easier to work with 3D in a React environment.
-
-10 Key Aspects of Three.js Usage in Your Project:
-Canvas Setup: The <Canvas> component creates a Three.js scene, camera, and renderer
-
-Geometry Creation: Using various Three.js geometries (Icosahedron, Capsule, etc.)
-
-Material Application: Applying different materials to 3D objects
-
-Animation: Using GSAP for smooth animations and transitions
-
-Interactivity: Adding click and hover events to 3D objects
-
-Environment Lighting: Using HDRI environment maps for realistic lighting
-
-Effects: Adding contact shadows for depth realism
-
-Floating Animation: Using Float from drei for hover effects
-
-Performance: Using Suspense for lazy loading assets
-
-Responsive Design: Camera setup that works with your layout
-
-
-
-*****************************************************************
-Documentation Recommendation
-For using the Three.js documentation effectively with your project:
-
-React Three Fiber Docs: Since you're using R3F, start with their documentation for React-specific implementations
-
-Drei Docs: For components like Float and ContactShadows, check drei documentation
-
-Three.js Core Docs: For understanding geometries and materials, use the main Three.js docs
-
-Search by Class: When looking up something, search for the class name (e.g., "THREE.IcosahedronGeometry")
-
-Examples Section: The Three.js examples section shows many practical implementations
-
-Remember that with R3F, Three.js classes are converted to React components (e.g., <mesh> instead of new THREE.Mesh()), but the underlying concepts remain the same.
-New chat
-************************************************************8
-the shape component file is then used in hero index file.
+then in our shape file sound effect was added, get used in our geometry, passed as prop and get called in our handleclick function to pick at and random and play

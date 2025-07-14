@@ -73,16 +73,26 @@ function Geometries() {
     new THREE.MeshStandardMaterial({ color: 0xe74c3c, roughness: 0.1 }), // Slightly rough red
     new THREE.MeshStandardMaterial({ color: 0x8e44ad, roughness: 0.1 }), // Slightly rough purple
     new THREE.MeshStandardMaterial({ color: 0x1abc9c, roughness: 0.1 }), // Slightly rough teal
-    new THREE.MeshStandardMaterial({ // Metallic blue
+    new THREE.MeshStandardMaterial({
+      // Metallic blue
       color: 0x2980b9,
       roughness: 0,
       metalness: 0.5,
     }),
-    new THREE.MeshStandardMaterial({ // Metallic dark blue
+    new THREE.MeshStandardMaterial({
+      // Metallic dark blue
       color: 0x2c3e50,
       roughness: 0,
       metalness: 0.5,
     }),
+  ];
+
+  //Adding Sound Effect
+  const soundEffects = [
+    new Audio("/sounds/hit.ogg"),
+    new Audio("/sounds/punch.ogg"),
+    new Audio("/sounds/bell.ogg"),
+    new Audio("/sounds/footstep.ogg"),
   ];
 
   // Render each geometry with its properties
@@ -90,6 +100,7 @@ function Geometries() {
     <Goemetry
       key={JSON.stringify(position)}
       position={position.map((p) => p * 2)} // Scale up positions
+      soundEffects={soundEffects}
       geometry={geometry}
       materials={materials}
       r={r} // Size factor
@@ -97,7 +108,7 @@ function Geometries() {
   ));
 }
 
-function Goemetry({ r, position, geometry, materials }) {
+function Goemetry({ r, position, geometry, materials, soundEffects }) {
   const meshRef = useRef(); // Reference to the mesh for animations
   const [visible, setVisible] = useState(false); // Visibility state
 
@@ -112,6 +123,7 @@ function Goemetry({ r, position, geometry, materials }) {
   function handleClick(e) {
     const mesh = e.object;
 
+    gsap.utils.random(soundEffects).play();
     // Animate rotation on click with random values
     gsap.to(mesh.rotation, {
       x: `+=${gsap.utils.random(0, 2)}`,
@@ -154,7 +166,7 @@ function Goemetry({ r, position, geometry, materials }) {
   return (
     <group position={position} ref={meshRef}>
       {/* Float wrapper for hover animation */}
-      <Float 
+      <Float
         speed={5 * r} // Rotation speed based on size
         rotationIntensity={6 * r} // Rotation amount based on size
         floatIntensity={5 * r} // Float height based on size
