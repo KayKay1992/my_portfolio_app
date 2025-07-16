@@ -1,0 +1,61 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"heading": {
+				"__TYPE__": "FieldContent",
+				"value": "up",
+				"type": "Text"
+			},
+			"description": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "paragraph",
+						"content": {
+							"text": "In amet aliquip laboris elit amet deserunt pariatur veniam incididunt elit. Sunt qui ea aliquip. Ipsum et duis anim in pariatur sint irure ullamco consectetur veniam."
+						}
+					}
+				]
+			},
+			"button": {
+				"__TYPE__": "FieldContent",
+				"value": "metal",
+				"type": "Text"
+			},
+			"button_link": {
+				"key": "cc625bda-e8eb-4c47-910e-fced939fb5d6",
+				"__TYPE__": "LinkContent",
+				"value": {
+					"__TYPE__": "ExternalLink",
+					"url": "http://twitter.com",
+					"text": "newspaper"
+				}
+			},
+			"avatar": {
+				"__TYPE__": "ImageContent",
+				"origin": {
+					"id": "main",
+					"url": "https://images.unsplash.com/photo-1560762484-813fc97650a0",
+					"width": 3344,
+					"height": 2509
+				},
+				"url": "https://images.unsplash.com/photo-1560762484-813fc97650a0",
+				"width": 3344,
+				"height": 2509,
+				"edit": {
+					"zoom": 1,
+					"crop": {
+						"x": 0,
+						"y": 0
+					},
+					"background": "transparent"
+				},
+				"alt": "directly",
+				"thumbnails": {}
+			}
+		},
+		"items": []
+	}
+]
