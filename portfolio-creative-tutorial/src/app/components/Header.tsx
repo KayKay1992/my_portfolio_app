@@ -8,7 +8,7 @@ export default async function Header(){
     const settings = await client.getSingle('settings');
     return (
         <header className='top-0 z-50 mx-auto max-w-7xl md:sticky md:top-4'>
-        <nav>
+        <nav className="mb-0 pb-0">
             <ul>
                 <li>
                     <Link href='/' aria-label='homepage'>

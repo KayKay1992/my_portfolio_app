@@ -1,38 +1,5 @@
-NAV BAR
+ABOUT PAGE
 
-setting up custom type in slice machine.
-a. head to your slice machine and click on custom types, Custom types
-Custom types are models that your editors can use to create menus or objects in the Page Builder. 
-b. click on create, select single page and give it a name Settings andhit the create button.
+a. Go to biography component index.ts, change th sectiion tag to bounded and get our description and heading from prismic.
 
-c. click the + sign and add select Text and name it name this will house your full name in the nave bar.
-
-d. click the + sign again and add a repeatable group and name it Nav Link,in this nav link you will see add a field button click on it to add a link and label field. we will use this repeatedly for about, blog etc.
-
-e. we add another separate filed for link and label outside the repeated group, this will house the contact.
-
-f. for the footer links we added separate links for twitter, github, linkedIn and instagram.
-
-g. then save it. WHen done your custom type has been created.
-
-h. beside main you will see a + sign click on it and create SEO and Metadata then add fields to it. then add text and name it Meta title, add another text and name it meta description, then finally add image field and name it OG Image. and save it
-
-i. then click on review changes and push your changes.
-
-j.in the prismic we navigated to the pages and added a new for logo kaycode and save and published.
-
-k.create a header component passing your name which servers as logo and pass it to layout.
-
-L.Create a new page type this time a reusable type, then add slice, this slice is for about page so we name it Biography, note it should start with capital letter.
-
-m. click the biography slice and add fields, the field includes Text field for heading, Rich text field for description, text for button, Link for button link, Image for Avatar, then save it.
-
-n. Review changes and push it.
-
-o. Go to prismic link of your project, create new page, name it about and add a slice, then go back to the pages, select settings and link the about page.
-
-p. Now pass the settings navlink to the header component file.
-
-q. so in prismicio.io we Update the routes array to match your project's route structure.
-
-r. We copied the code snippet from page in prismic then post it in the new page.tsx file we created
+b. we used a prose style this will enhance the typography of our description, we installed a tailwind css third party package with this command npm i tailwind -D @tailwindcss/typography and add the plugin to our tailwind.config.

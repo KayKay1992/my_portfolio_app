@@ -74,8 +74,9 @@ useEffect(() => {
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
       ref={component}
+      className="!pt-0" // 👈 Force remove top padding
     >
-      <div className="grid min-h-[70vh] grid-cols-1 md:grid-cols-2 items-center">
+      <div className="grid min-h-[calc(100vh-80px)] grid-cols-1 md:grid-cols-2 items-center">
         <Shapes/>
         <div className="col-start-1 md:row-start-1">
           <h1

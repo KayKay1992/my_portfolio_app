@@ -7,7 +7,6 @@ type BoundedProps<T extends React.ElementType> = {
   children: React.ReactNode;
 } & React.ComponentPropsWithRef<T>;
 
-// Base implementation with non-generic function
 function BoundedBase(
   props: BoundedProps<"section">,
   ref: React.Ref<HTMLElement>
@@ -23,10 +22,10 @@ function BoundedBase(
     <Component
       ref={ref}
       className={clsx(
-        "px-4 py-10",
+        "px-4 py-10", // Default padding (can be overridden)
         "sm:px-6 sm:py-12",
         "md:py-14",
-        "lg:py-16",
+        "lg:py-10",
         className
       )}
       {...rest}
@@ -36,10 +35,8 @@ function BoundedBase(
   );
 }
 
-// forwardRef requires a non-generic function
 const BoundedWithRef = React.forwardRef(BoundedBase);
 
-// Now: safe generic wrapper with `unknown` cast
 const Bounded = <T extends React.ElementType = "section">(
   props: BoundedProps<T>
 ) => {
