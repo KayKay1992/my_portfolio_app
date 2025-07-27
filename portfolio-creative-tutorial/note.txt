@@ -1,5 +1,33 @@
-ABOUT PAGE
+TECH LIST (MARQUEE TITLE)
 
-a. Go to biography component index.ts, change th sectiion tag to bounded and get our description and heading from prismic.
+We will use scrolltrigger utility from gsap to display and add this functionality.
+we import scrolltrigger and register it as plugin.
 
-b. we used a prose style this will enhance the typography of our description, we installed a tailwind css third party package with this command npm i tailwind -D @tailwindcss/typography and add the plugin to our tailwind.config.
+so in our prismic we add that slice (th techlist), in our page type, click add slice then start from scratch, name it techlist and create. then add repeated fields then we saved and push the changes
+
+In prismic about page we added the tech list slice and save and publish it.
+
+going back to your project you will see techlist directory and you can edit it fromthe index.ts file.
+
+explaining the techlist index.tsx file.
+
+🧠 10-Line Explanation:
+This component displays a list of technologies using a CMS-powered "Slice" from Prismic.
+
+It expects props based on Content.TechlistSlice, provided by Prismic's type generator.
+
+The Heading is shown at the top using a custom heading component and styled via Tailwind.
+
+Each tech item inside techgroup is looped over to render a list item (li).
+
+Inside each li, the tech name is repeated 15 times using Array.from(...).
+
+The 8th item (index 7) is highlighted with the custom techcolor if it exists.
+
+Each tech name is styled to be very large and bold (text-8xl font-extrabold).
+
+A circle icon (MdCircle) is shown after each name for visual separation.
+
+All items are centrally aligned using Flexbox (flex items-center justify-center).
+
+If techgroup is empty, a fallback message "No technologies listed." is shown.
