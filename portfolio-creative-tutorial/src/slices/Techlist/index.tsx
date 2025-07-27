@@ -61,27 +61,36 @@ const Techlist: FC<TechlistProps> = ({ slice }) => {
         </Heading>
       </Bounded>
 
-      <ul className="">
-        {/* Loop through each technology group */}
-        {slice.primary.techgroup?.map((item, index) => (
-          <li key={index} className="tech-row mb-8 flex items-center justify-center gap-4 text-slate-700" aria-label={item.techname || undefined}>
-            {/* Render tech name 15 times with special color on the 8th item */}
-            {Array.from({ length: 15 }, (_, index) => (
-              <React.Fragment key={index}>
-                <span 
-                  className="tech-item text-8xl font-extrabold uppercase tracking-tighter"
-                  style={{ color: index === 7 && item.techcolor ? item.techcolor : 'inherit' }}
-                >
-                  {item.techname}
-                </span>
-                <span className="text-3xl">
-                  <MdCircle /> {/* Render a small circle icon after each name */}
-                </span>
-              </React.Fragment>
-            ))}
-          </li>
-        )) || <p>No technologies listed.</p>} {/* Fallback if techgroup is empty */}
-      </ul>
+    <ul className="">
+  {slice.items?.length > 0 ? (
+    slice.items.map((item, index) => (
+      <li
+        key={index}
+        className="tech-row mb-8 flex items-center justify-center gap-4 text-slate-700"
+        aria-label={item.techname || undefined}
+      >
+        {Array.from({ length: 15 }, (_, index) => (
+          <React.Fragment key={index}>
+            <span
+              className="tech-item text-8xl font-extrabold uppercase tracking-tighter"
+              style={{
+                color: index === 7 && item.techcolor ? item.techcolor : 'inherit',
+              }}
+            >
+              {item.techname}
+            </span>
+            <span className="text-3xl">
+              <MdCircle />
+            </span>
+          </React.Fragment>
+        ))}
+      </li>
+    ))
+  ) : (
+    <p>No technologies listed.</p>
+  )}
+</ul>
+
     </section>
   );
 };
