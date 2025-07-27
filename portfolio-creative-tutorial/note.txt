@@ -1,33 +1,73 @@
-TECH LIST (MARQUEE TITLE)
+ANIMATING TECH LIST
 
-We will use scrolltrigger utility from gsap to display and add this functionality.
-we import scrolltrigger and register it as plugin.
 
-so in our prismic we add that slice (th techlist), in our page type, click add slice then start from scratch, name it techlist and create. then add repeated fields then we saved and push the changes
+Here’s a 7-line explanation of the GSAP animation logic in your enhanced `Techlist` component:
 
-In prismic about page we added the tech list slice and save and publish it.
+1. The animation uses **GSAP** with the **ScrollTrigger** plugin to animate tech rows as the user scrolls.
+2. A `useRef` named `component` is attached to the section to serve as the scroll trigger target.
+3. Inside a `useEffect`, `gsap.context` ensures scoped animations and proper cleanup.
+4. A GSAP timeline is created and linked to the scroll position using `scrub: 7`, which smooths the scroll animation.
+5. Each `.tech-row` element animates its horizontal position (`x`) from a random offset (left or right) toward the opposite direction.
+6. The direction of the animation alternates by index — even rows move one way, odd rows the other.
+7. On component unmount, `ctx.revert()` is called to clean up the animation and avoid memory leaks.
 
-going back to your project you will see techlist directory and you can edit it fromthe index.ts file.
+Let me know if you want to add fade-in, stagger, or scroll-based scaling effects next!
 
-explaining the techlist index.tsx file.
 
-🧠 10-Line Explanation:
-This component displays a list of technologies using a CMS-powered "Slice" from Prismic.
+some other animations style
+1. Staggered Slide + Fade In (for tech rows)
+Gives a smooth, elegant entrance with motion and opacity.
 
-It expects props based on Content.TechlistSlice, provided by Prismic's type generator.
+tl.from('.tech-row', {
+  x: (index) => index % 2 === 0 ? 200 : -200,
+  opacity: 0,
+  duration: 1.2,
+  ease: 'power3.out',
+  stagger: 0.2, // Adds delay between each tech-row animation
+});
 
-The Heading is shown at the top using a custom heading component and styled via Tailwind.
+2. Skew + Scale Entry (for dramatic reveal)
+Adds a modern, cinematic flair.
+tl.from('.tech-row', {
+  opacity: 0,
+  scale: 0.8,
+  skewX: 20,
+  duration: 1.5,
+  ease: 'expo.out',
+  stagger: 0.15,
+});
 
-Each tech item inside techgroup is looped over to render a list item (li).
+3. Scroll-synced Parallax Slide
+Makes the rows glide horizontally in sync with scroll position.
 
-Inside each li, the tech name is repeated 15 times using Array.from(...).
+ts
+Copy
+Edit
+tl.to('.tech-row', {
+  xPercent: (index) => (index % 2 === 0 ? -40 : 40),
+  ease: 'none',
+  scrollTrigger: {
+    trigger: component.current,
+    scrub: true,
+    start: 'top bottom',
+    end: 'bottom top',
+  },
+});
 
-The 8th item (index 7) is highlighted with the custom techcolor if it exists.
+4. Bounce Pop-In (tech names only)
+Targets .tech-item spans and adds a fun bounce effect.
 
-Each tech name is styled to be very large and bold (text-8xl font-extrabold).
-
-A circle icon (MdCircle) is shown after each name for visual separation.
-
-All items are centrally aligned using Flexbox (flex items-center justify-center).
-
-If techgroup is empty, a fallback message "No technologies listed." is shown.
+ts
+Copy
+Edit
+tl.from('.tech-item', {
+  scale: 0,
+  opacity: 0,
+  duration: 0.6,
+  ease: 'back.out(1.7)',
+  stagger: {
+    each: 0.03,
+    grid: [slice.primary.techgroup.length, 15],
+    from: 'random',
+  },
+});
