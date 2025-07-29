@@ -1,6 +1,49 @@
-Creating a project page in prismic 
+Integrating navbar nav_item links and footer with social media links
 
-click on create new page => select page=> give it a name we called it projects=> add slice (bring in the contentIndext) => fill the labels then hit save and publish. then after publushing we go to the settings page and add it to the nave links.
+explaining navbar component
 
-then we cleaned up our blog rendering animation
+Here's a concise explanation in 20 lines:
 
+1. This is a responsive React navigation component using Next.js and Prismic CMS.
+2. It takes `settings` prop containing navigation data from Prismic.
+3. Uses `useState` to toggle mobile menu visibility with `open` state.
+4. `usePathname` tracks current route for active link styling.
+5. The navbar has two main views: mobile (hidden by default) and desktop.
+6. Mobile view slides in/out with transform animation when menu button is clicked.
+7. `NameLogo` component renders the site name as a home link.
+8. Mobile menu shows close button (MdClose) when open.
+9. Navigation items are mapped from `settings.data.nav_item`.
+10. Each link has an animated yellow underline effect on hover/active state.
+11. Active links are highlighted using `pathname` comparison.
+12. Links use `PrismicNextLink` for Prismic-optimized routing.
+13. Separators (/) are shown between desktop nav items.
+14. Includes a CTA button from the settings data.
+15. `clsx` handles conditional class names for styling.
+16. Mobile menu has ARIA attributes for accessibility.
+17. Desktop menu is hidden on mobile and vice versa (md: breakpoint).
+18. Animation transitions are 300ms ease-in-out.
+19. The component uses semantic HTML with `<nav>` and `<ul>` elements.
+20. Styled with Tailwind CSS classes for responsive layout and theming.
+
+The code creates an accessible, animated navigation bar that works across devices, with Prismic CMS integration for content management.
+
+
+explaining the footer component 
+
+Here’s a concise 10-line explanation of your `Footer` component with inline context:
+
+1. **Imports utilities and components** like `clsx` for class merging, Prismic client functions, and social media icons.
+2. **Defines an async `Footer` component** that fetches global site settings from Prismic CMS.
+3. **Wraps footer content** in a `<Bounded>` layout component styled as a footer.
+4. **Displays the site name and current year**, dynamically loaded from Prismic's `settings.data.name`.
+5. **Renders navigation links** stored in `settings.data.nav_item` using `PrismicNextLink` with a styled separator `/`.
+6. **Checks each social media link** (GitHub, Twitter, LinkedIn, Instagram) using `isFilled.link()` to ensure they exist.
+7. **Renders social icons as links**, styled with hover effects (color and scale) and accessible labels.
+8. **Uses `React.Fragment` with keys** to avoid unnecessary DOM wrappers and include separators conditionally.
+9. **Applies responsive layout** with Tailwind classes to align footer items across screen sizes.
+10. **Returns the full footer block**, neatly structured into name, navigation, and social sections.
+
+Let me know if you’d like this broken down further into visual layout or styled component behavior.
+
+
+NOTE: IN prismic at settings page i inputted the links social media links
