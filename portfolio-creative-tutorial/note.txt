@@ -1,1 +1,93 @@
-Adding the hover image
+Animating the hover image and animation of post render
+
+animated the blog image
+added another blog post from prismic project by creating a log post,
+animated how the posts appears.
+
+
+✅ 1. Animation of Post Render (Entry Animation)
+This is handled in the first useEffect with ScrollTrigger and gsap.fromTo:
+useEffect(() => {
+  let ctx = gsap.context(() => [
+    itemsRef.current.forEach((item) => {
+      gsap.fromTo(
+        item,
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 5,
+          ease: "elastic.out(1,0.3)",
+          scrollTrigger: {
+            trigger: item,
+            start: "top bottom-=100px",
+            end: "bottom center",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    }),
+  ]);
+});
+What this does:
+When each post (<li>) scrolls into view, it:
+
+Fades in from opacity 0 → 1
+
+Moves vertically from y: 20 → y: 0
+
+Animates with a bouncy elastic effect
+
+Triggered via GSAP's ScrollTrigger, which makes it smooth and performant during scroll
+
+duration: 5 means it eases in slowly (could be considered long)
+
+
+✅ 2. Hover Image Animation (Reveal on Hover + Follow Mouse)
+This is handled in the second useEffect and the hover logic with onMouseEnter/onMouseLeave:
+
+useEffect(() => {
+  const handleMouseMove = (e: MouseEvent) => {
+    const mousePos = { x: e.clientX, y: e.clientY + window.scrollY };
+    const speed = Math.sqrt(Math.pow(mousePos.x - lastMousePos.current.x, 2));
+
+    let ctx = gsap.context(() => {
+      if (currentItem !== null) {
+        const maxY = window.scrollY + window.innerHeight - 350;
+        const maxX = window.innerWidth - 250;
+
+        gsap.to(revealRef.current, {
+          x: gsap.utils.clamp(0, maxX, mousePos.x - 110),
+          y: gsap.utils.clamp(0, maxY, mousePos.y - 160),
+          rotation: speed * (mousePos.x > lastMousePos.current.x ? 1 : -1),
+          ease: "back.out(2)",
+          duration: 1.3,
+          opacity: 1,
+        });
+      }
+      lastMousePos.current = mousePos;
+    }, component);
+  };
+
+  window.addEventListener("mousemove", handleMouseMove);
+  return () => window.removeEventListener("mousemove", handleMouseMove);
+}, [currentItem]);
+
+
+What this does:
+When the user hovers on a list item, onMouseEnter(index) sets currentItem, which triggers:
+
+The hover image (<div className="hover-reveal">) to:
+
+Appear (opacity: 1)
+
+Follow the cursor position with a slight offset
+
+Rotate slightly based on cursor speed and direction
+
+It also hides when mouse leaves the list (onMouseLeave)
+
+✨ Summary of the 2 Actions
+Action	Behavior	Tools Used
+1. Post Render Animation	List items fade + bounce in as you scroll down the page	gsap.fromTo + ScrollTrigger
+2. Hover Image Animation	An image appears and follows the cursor when hovering a post	gsap.to + dynamic styles + mouse events
