@@ -1,6 +1,8 @@
-import { Content, isFilled } from "@prismicio/client";
+'use client'
+
+import { asImageSrc, Content, isFilled } from "@prismicio/client";
 import Link from "next/link";
-import React from "react";
+import React, { useRef, useState } from "react";
 import { MdArrowOutward } from "react-icons/md";
 
 type ContentListListProps = {
@@ -15,12 +17,36 @@ export default function ContentList({
   fallbackItemImage,
   viewMoreText = "Read More",
 }: ContentListListProps) {
+    const component = useRef(null)
+    const [currentItem, setCurrentItem] = useState<null | number>(null)
   const urlPrefix = contentType === "Blog" ? "/blog" : "/project";
+
+  //creating array of images
+  const  contentImages = items.map((item)=> {
+    const image = isFilled.image(item.data.hover_image) ? item.data.hover_image : fallbackItemImage
+
+    return asImageSrc(image, {
+        fit: 'crop',
+        w: 220,
+        h: 320,
+        exp: -10
+    })
+  })
+
+  const onMouseEnter = (index: number) => {
+    setCurrentItem(index)
+  }
+
+  const  onMouseLeave = () => {
+    setCurrentItem(null)
+  }
   return (
-    <div>
-      <ul className="grid border-b border-b-slate-100">
-        {items.map((item) => (
-          <li key={item.uid} className="list-item opacity-0f">
+    <div ref={component}>
+      <ul className="grid border-b border-b-slate-100" onMouseLeave={onMouseLeave}>
+        {items.map((item, index) => (
+          <li key={item.uid} className="list-item opacity-0f"
+          onMouseEnter={()=> onMouseEnter(index)}
+          >
             {isFilled.keyText(item.data.title) && (
               <Link
                 href={urlPrefix + "/" + item.uid}
@@ -43,6 +69,11 @@ export default function ContentList({
           </li>
         ))}
       </ul>
+
+      {/*Hover element */}
+      <div className="hover-reveal pointer-events-none absolute left-0 top-0 -z-10 h-[320px] w-[220px] rounded-lg bg-cover bg-center opacity-0f transition-[background] duration-300" style={{
+        backgroundImage: currentItem !== null ? `url(${contentImages[currentItem]})` : ''
+      }}></div>
     </div>
   );
 }
