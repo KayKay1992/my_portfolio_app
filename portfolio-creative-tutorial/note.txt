@@ -1,93 +1,136 @@
-Animating the hover image and animation of post render
+Here are **five alternative animation styles** you can apply to the **hover image** (the `.hover-reveal` div) using `GSAP` to make it more engaging and interactive:
 
-animated the blog image
-added another blog post from prismic project by creating a log post,
-animated how the posts appears.
+---
 
+### ✅ 1. **Smooth Scale + Fade In**
 
-✅ 1. Animation of Post Render (Entry Animation)
-This is handled in the first useEffect with ScrollTrigger and gsap.fromTo:
-useEffect(() => {
-  let ctx = gsap.context(() => [
-    itemsRef.current.forEach((item) => {
-      gsap.fromTo(
-        item,
-        { opacity: 0, y: 20 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 5,
-          ease: "elastic.out(1,0.3)",
-          scrollTrigger: {
-            trigger: item,
-            start: "top bottom-=100px",
-            end: "bottom center",
-            toggleActions: "play none none none",
-          },
-        }
-      );
-    }),
-  ]);
+A more subtle entrance with a soft zoom and opacity:
+
+```ts
+gsap.to(revealRef.current, {
+  x: clampedX,
+  y: clampedY,
+  scale: 1,
+  opacity: 1,
+  ease: "power3.out",
+  duration: 0.6,
 });
-What this does:
-When each post (<li>) scrolls into view, it:
+```
 
-Fades in from opacity 0 → 1
+Before this, you can set the initial scale smaller on hover start:
 
-Moves vertically from y: 20 → y: 0
+```ts
+gsap.set(revealRef.current, { scale: 0.85, opacity: 0 });
+```
 
-Animates with a bouncy elastic effect
+---
 
-Triggered via GSAP's ScrollTrigger, which makes it smooth and performant during scroll
+### ✅ 2. **Floating/Parallax Lag Effect**
 
-duration: 5 means it eases in slowly (could be considered long)
+Delays the image’s movement slightly behind the cursor for a fluid "magnetic" feel:
+
+```ts
+gsap.to(revealRef.current, {
+  x: clampedX,
+  y: clampedY,
+  opacity: 1,
+  ease: "power2.out",
+  duration: 0.9,
+});
+```
+
+Add a subtle `skewX`/`skewY` or `scale` change on move for more depth:
+
+```ts
+skewX: speed > 10 ? 5 : 0,
+skewY: speed > 10 ? 2 : 0,
+```
+
+---
+
+### ✅ 3. **Flip or Rotate on Hover**
+
+Rotates the image in 3D as it appears. Add `transform-style: preserve-3d;` and perspective on a parent container.
+
+```ts
+gsap.to(revealRef.current, {
+  rotationY: 15,
+  x: clampedX,
+  y: clampedY,
+  opacity: 1,
+  scale: 1,
+  ease: "expo.out",
+  duration: 1,
+});
+```
+
+On mouse leave, revert it:
+
+```ts
+gsap.to(revealRef.current, { rotationY: 0, opacity: 0, duration: 0.5 });
+```
+
+---
+
+### ✅ 4. **Clip Path Reveal**
+
+You can reveal the hover image using a `clip-path` animation:
+
+```ts
+gsap.fromTo(
+  revealRef.current,
+  {
+    clipPath: "circle(0% at 50% 50%)",
+    opacity: 0,
+  },
+  {
+    clipPath: "circle(70% at 50% 50%)",
+    opacity: 1,
+    duration: 0.6,
+    ease: "power2.out",
+  }
+);
+```
+
+Make sure the element has `overflow: hidden;` and `will-change: clip-path`.
+
+---
+
+### ✅ 5. **Grayscale to Color Fade**
+
+Start with grayscale or blurred and animate to full color:
+
+```ts
+gsap.fromTo(
+  revealRef.current,
+  {
+    filter: "grayscale(100%) blur(8px)",
+    opacity: 0,
+  },
+  {
+    filter: "grayscale(0%) blur(0px)",
+    opacity: 1,
+    duration: 1,
+    ease: "power3.out",
+  }
+);
+```
+
+This gives a modern and polished look.
+
+---
+
+### 📌 Tip for Implementation
+
+In your existing mousemove handler, assign:
+
+```ts
+const clampedX = gsap.utils.clamp(0, maxX, mousePos.x - 110);
+const clampedY = gsap.utils.clamp(0, maxY, mousePos.y - 160);
+```
+
+Use that in the animations above for positioning, and wrap with `gsap.context()` as you're already doing.
+
+---
 
 
-✅ 2. Hover Image Animation (Reveal on Hover + Follow Mouse)
-This is handled in the second useEffect and the hover logic with onMouseEnter/onMouseLeave:
-
-useEffect(() => {
-  const handleMouseMove = (e: MouseEvent) => {
-    const mousePos = { x: e.clientX, y: e.clientY + window.scrollY };
-    const speed = Math.sqrt(Math.pow(mousePos.x - lastMousePos.current.x, 2));
-
-    let ctx = gsap.context(() => {
-      if (currentItem !== null) {
-        const maxY = window.scrollY + window.innerHeight - 350;
-        const maxX = window.innerWidth - 250;
-
-        gsap.to(revealRef.current, {
-          x: gsap.utils.clamp(0, maxX, mousePos.x - 110),
-          y: gsap.utils.clamp(0, maxY, mousePos.y - 160),
-          rotation: speed * (mousePos.x > lastMousePos.current.x ? 1 : -1),
-          ease: "back.out(2)",
-          duration: 1.3,
-          opacity: 1,
-        });
-      }
-      lastMousePos.current = mousePos;
-    }, component);
-  };
-
-  window.addEventListener("mousemove", handleMouseMove);
-  return () => window.removeEventListener("mousemove", handleMouseMove);
-}, [currentItem]);
-
-
-What this does:
-When the user hovers on a list item, onMouseEnter(index) sets currentItem, which triggers:
-
-The hover image (<div className="hover-reveal">) to:
-
-Appear (opacity: 1)
-
-Follow the cursor position with a slight offset
-
-Rotate slightly based on cursor speed and direction
-
-It also hides when mouse leaves the list (onMouseLeave)
-
-✨ Summary of the 2 Actions
-Action	Behavior	Tools Used
-1. Post Render Animation	List items fade + bounce in as you scroll down the page	gsap.fromTo + ScrollTrigger
-2. Hover Image Animation	An image appears and follows the cursor when hovering a post	gsap.to + dynamic styles + mouse events
