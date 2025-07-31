@@ -69,7 +69,7 @@ type ContentRelationshipFieldWithData<
   >;
 }[Exclude<TCustomType[number], string>["id"]];
 
-type BlogPostDocumentDataSlicesSlice = TextBlockSlice;
+type BlogPostDocumentDataSlicesSlice = ImageBlockSlice | TextBlockSlice;
 
 /**
  * Content for Blog Post documents
@@ -296,7 +296,10 @@ interface PageDocumentData {
 export type PageDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
 
-type ProjectDocumentDataSlicesSlice = TextBlockSlice;
+type ProjectDocumentDataSlicesSlice =
+  | LinkBlockSlice
+  | ImageBlockSlice
+  | TextBlockSlice;
 
 /**
  * Content for Project documents
@@ -848,6 +851,112 @@ type HeroSliceVariation = HeroSliceDefault;
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
 
 /**
+ * Primary content in *ImageBlock → Default → Primary*
+ */
+export interface ImageBlockSliceDefaultPrimary {
+  /**
+   * Image field in *ImageBlock → Default → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: image_block.default.primary.image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>;
+}
+
+/**
+ * Default variation for ImageBlock Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ImageBlockSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<ImageBlockSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *ImageBlock*
+ */
+type ImageBlockSliceVariation = ImageBlockSliceDefault;
+
+/**
+ * ImageBlock Shared Slice
+ *
+ * - **API ID**: `image_block`
+ * - **Description**: ImageBlock
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ImageBlockSlice = prismic.SharedSlice<
+  "image_block",
+  ImageBlockSliceVariation
+>;
+
+/**
+ * Primary content in *LinkBlock → Default → Primary*
+ */
+export interface LinkBlockSliceDefaultPrimary {
+  /**
+   * Project Link field in *LinkBlock → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: link_block.default.primary.project_link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  project_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Button field in *LinkBlock → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: link_block.default.primary.button
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  button: prismic.KeyTextField;
+}
+
+/**
+ * Default variation for LinkBlock Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type LinkBlockSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<LinkBlockSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *LinkBlock*
+ */
+type LinkBlockSliceVariation = LinkBlockSliceDefault;
+
+/**
+ * LinkBlock Shared Slice
+ *
+ * - **API ID**: `link_block`
+ * - **Description**: LinkBlock
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type LinkBlockSlice = prismic.SharedSlice<
+  "link_block",
+  LinkBlockSliceVariation
+>;
+
+/**
  * Primary content in *Techlist → Default → Primary*
  */
 export interface TechlistSliceDefaultPrimary {
@@ -918,6 +1027,21 @@ export type TechlistSlice = prismic.SharedSlice<
 >;
 
 /**
+ * Primary content in *TextBlock → Default → Primary*
+ */
+export interface TextBlockSliceDefaultPrimary {
+  /**
+   * Text field in *TextBlock → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: text_block.default.primary.text
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  text: prismic.RichTextField;
+}
+
+/**
  * Default variation for TextBlock Slice
  *
  * - **API ID**: `default`
@@ -926,7 +1050,7 @@ export type TechlistSlice = prismic.SharedSlice<
  */
 export type TextBlockSliceDefault = prismic.SharedSliceVariation<
   "default",
-  Record<string, never>,
+  Simplify<TextBlockSliceDefaultPrimary>,
   never
 >;
 
@@ -997,12 +1121,21 @@ declare module "@prismicio/client" {
       HeroSliceDefaultPrimary,
       HeroSliceVariation,
       HeroSliceDefault,
+      ImageBlockSlice,
+      ImageBlockSliceDefaultPrimary,
+      ImageBlockSliceVariation,
+      ImageBlockSliceDefault,
+      LinkBlockSlice,
+      LinkBlockSliceDefaultPrimary,
+      LinkBlockSliceVariation,
+      LinkBlockSliceDefault,
       TechlistSlice,
       TechlistSliceDefaultPrimary,
       TechlistSliceDefaultItem,
       TechlistSliceVariation,
       TechlistSliceDefault,
       TextBlockSlice,
+      TextBlockSliceDefaultPrimary,
       TextBlockSliceVariation,
       TextBlockSliceDefault,
     };

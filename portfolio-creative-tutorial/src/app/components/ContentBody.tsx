@@ -1,52 +1,48 @@
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { asImageSrc, DateField, isFilled } from "@prismicio/client";
+import { Content, DateField, isFilled } from "@prismicio/client";
 import { SliceZone } from "@prismicio/react";
-
-import { createClient } from "@/prismicio";
 import { components } from "@/slices";
 import Bounded from "@/app/components/bounded";
+import Heading from "@/slices/Biography/Heading";
 
-export default async function Page({ params }: { params: { uid: string } }) {
-  const client = createClient();
-  const page = await client.getByUID("blog_post", params.uid).catch(() => notFound());
-
+export default function ContentBody({
+  page,
+}: {
+  page: Content.BlogPostDocument | Content.ProjectDocument;
+}) {
   function formatDate(date: DateField) {
     if (isFilled.date(date)) {
-      return new Intl.DateTimeFormat("en-US", {
+      const dateOptions: Intl.DateTimeFormatOptions = {
         weekday: "long",
         year: "numeric",
         month: "long",
         day: "numeric",
-      }).format(new Date(date));
+      };
+      return new Intl.DateTimeFormat("en-US", dateOptions).format(
+        new Date(date)
+      );
     }
   }
 
+  const formattedDate = formatDate(page.data.date);
   return (
     <Bounded as="article" className="!py-16">
       <div className="rounded-2xl bg-slate-900/95 p-6 shadow-2xl ring-1 ring-slate-800/50 backdrop-blur-sm md:p-12">
-        {/* Header */}
-        <header className="mb-16 text-center">
-          <div className="mb-8 flex flex-wrap justify-center gap-3">
-            {page.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full bg-yellow-500/10 px-4 py-1.5 text-sm font-semibold text-yellow-400 transition-transform hover:scale-105"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          <h1 className="mb-6 text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl">
-            {page.data.title}
-          </h1>
-
-          <p className="text-lg text-slate-400">
-            Published on{" "}
-            <time className="font-semibold text-slate-200">{formatDate(page.data.date)}</time>
-          </p>
-        </header>
+        <Heading as="h1" className="mb-8 text-center">
+          {page.data.title}{" "}
+        </Heading>
+        <div className="mb-8 flex flex-wrap justify-center gap- text-yellow-500">
+          {page.tags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full bg-yellow-500/10 px-4 py-1.5 text-sm font-semibold text-yellow-400 transition-transform hover:scale-105"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+        <p className="text-lg mt-8 text-slate-400  border-b border-slate-600 ">
+          Published on <time className="">{formatDate(page.data.date)}</time>
+        </p>
 
         {/* Content */}
         <div
@@ -88,6 +84,8 @@ export default async function Page({ params }: { params: { uid: string } }) {
             prose-ol:text-slate-300
             prose-li:mb-2
             dark:prose-invert
+            mt-12
+           
           `}
         >
           <SliceZone slices={page.data.slices} components={components} />
@@ -98,7 +96,6 @@ export default async function Page({ params }: { params: { uid: string } }) {
           <p className="text-slate-400">Thank you for reading!</p>
         </footer>
       </div>
-      
     </Bounded>
   );
 }

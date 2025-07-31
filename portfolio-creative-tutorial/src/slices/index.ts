@@ -6,6 +6,8 @@ export const components = {
   biography: dynamic(() => import("./Biography")),
   content_index: dynamic(() => import("./ContentIndex")),
   hero: dynamic(() => import("./Hero")),
+  image_block: dynamic(() => import("./ImageBlock")),
+  link_block: dynamic(() => import("./LinkBlock")),
   techlist: dynamic(() => import("./Techlist")),
   text_block: dynamic(() => import("./TextBlock")),
 };

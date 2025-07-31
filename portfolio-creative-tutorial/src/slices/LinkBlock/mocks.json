@@ -1,0 +1,23 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"project_link": {
+				"key": "9649382f-0e64-4f43-ae65-22643d20b302",
+				"__TYPE__": "LinkContent",
+				"value": {
+					"__TYPE__": "ExternalLink",
+					"url": "http://twitter.com",
+					"text": "sit"
+				}
+			},
+			"button": {
+				"__TYPE__": "FieldContent",
+				"value": "fill",
+				"type": "Text"
+			}
+		},
+		"items": []
+	}
+]

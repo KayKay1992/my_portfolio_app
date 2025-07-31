@@ -21,44 +21,50 @@ const Biography: FC<BiographyProps> = ({ slice }) => {
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
     >
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-[2fr_1fr]">
+      <div className="grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-[2fr_1fr]">
         <Heading as="h1" size="xl" className="col-start-1">
           {slice.primary.heading}
         </Heading>
 
-        <div className="prose prose-xl prose-slate prose-invert col-start-1">
-          <PrismicRichText field={slice.primary.description}  />
-
-             <Button linkField={slice.primary.button_link} label={slice.primary.button} className="mt-6"/>
+        <div className="prose prose-lg dark:prose-invert max-w-none col-start-1 prose-headings:font-bold prose-p:text-slate-600 dark:prose-p:text-slate-300 prose-a:text-blue-600 hover:prose-a:text-blue-500 prose-ul:list-disc prose-ol:list-decimal prose-li:marker:text-slate-400">
+          <PrismicRichText
+            field={slice.primary.description}
+            components={{
+              paragraph: ({ children }) => (
+                <p className="mb-6 last:mb-0 ">{children}</p>
+              ),
+              heading2: ({ children }) => (
+                <h2 className="mb-4 mt-8 text-2xl">{children}</h2>
+              ),
+              heading3: ({ children }) => (
+                <h3 className="mb-3 mt-6 text-xl">{children}</h3>
+              ),
+              list: ({ children }) => <ul className="my-4 pl-6">{children}</ul>,
+              oList: ({ children }) => (
+                <ol className="my-4 pl-6">{children}</ol>
+              ),
+              image: ({ node }) => (
+                <div className="my-6 not-prose">
+                  <PrismicNextImage
+                    field={node}
+                    className="rounded-lg shadow-md"
+                  />
+                </div>
+              ),
+            }}
+          />
+          <Button
+            linkField={slice.primary.button_link}
+            label={slice.primary.button}
+            className="mt-6 not-prose"
+          />
         </div>
-        <Avatar image={slice.primary.avatar} className="row-start-1 max-w-sm md:col-start-2 md:row-end-3"/>
+
+        <Avatar
+          image={slice.primary.avatar}
+          className="row-start-1 max-w-sm md:col-start-2 md:row-end-3"
+        />
       </div>
-      {/**
-       * 💡 Use Prismic MCP with your code editor
-       *
-       * Get AI-powered help to build your slice components — based on your actual model.
-       *
-       * ▶️ Setup:
-       * 1. Add a new MCP Server in your code editor:
-       *
-       * {
-       *   "mcpServers": {
-       *     "Prismic MCP": {
-       *       "command": "npx",
-       *       "args": ["-y", "@prismicio/mcp-server@latest"]
-       *     }
-       *   }
-       * }
-       *
-       * 2. Select a model optimized for coding (e.g. Claude 3.7 Sonnet or similar)
-       *
-       * ✅ Then open your slice file and ask your code editor:
-       *    "Code this slice"
-       *
-       * Your code editor reads your slice model and helps you code faster ⚡
-       * 🎙️ Give your feedback: https://community.prismic.io/t/help-us-shape-the-future-of-slice-creation/19505
-       * 📚 Documentation: https://prismic.io/docs/ai#code-with-prismics-mcp-server
-       */}
     </Bounded>
   );
 };
