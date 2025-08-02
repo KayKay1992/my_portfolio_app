@@ -27,7 +27,7 @@ export default function ContentBody({
   return (
     <Bounded as="article" className="!py-16">
       <div className="rounded-2xl bg-slate-900/95 p-6 shadow-2xl ring-1 ring-slate-800/50 backdrop-blur-sm md:p-12">
-        <Heading as="h1" className="mb-8 text-center">
+        <Heading as="h1" className="mb-8 text-center justify-center flex flex-wrap">
           {page.data.title}{" "}
         </Heading>
         <div className="mb-8 flex flex-wrap justify-center gap- text-yellow-500">

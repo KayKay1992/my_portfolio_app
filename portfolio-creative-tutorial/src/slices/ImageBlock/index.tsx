@@ -14,16 +14,17 @@ export type ImageBlockProps = SliceComponentProps<Content.ImageBlockSlice>;
 const ImageBlock: FC<ImageBlockProps> = ({ slice }) => {
   return (
     <div className="my-8 flex justify-center">
-      <div className="overflow-hidden rounded-2xl shadow-xl max-w-4xl w-full">
+      <div className="overflow-hidden rounded-2xl shadow-xl max-w-3xl w-full">
         <PrismicNextImage
           field={slice.primary.image}
+          fallbackAlt=""
           imgixParams={{
-            w: 1200,
-          auto: ["format", "compress"],
+            w: 800,
+            auto: ["format", "compress"],
             fit: "max",
             q: 80,
           }}
-          className="w-full h-auto object-cover transition-transform duration-500 hover:scale-105"
+          className="w-full h-auto max-h-[500px] object-cover transition-transform duration-500 hover:scale-105"
         />
       </div>
     </div>
