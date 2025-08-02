@@ -1,1 +1,6 @@
-Building Experience Slice and integrating it, added a blog
+Changing the background of slices in prismic via adding background in slice-simulator.
+
+then we integrated prettier backage by running this command  npm i prettier prettier-plugin-tailwindcss
+this helps to sort your classes.
+
+then we add prismismic preview in our layout file
